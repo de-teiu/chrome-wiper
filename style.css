@@ -1,0 +1,64 @@
+.chrome-wiper {
+    z-index: 2147483647;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none;
+}
+
+.chrome-wiper * {
+    pointer-events: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.wiper-root {
+    position: relative;
+    bottom: -2vw;
+    transform-origin: 7% 93%;
+    will-change: transform;
+    width: 25vw;
+}
+
+.wiper-branch {
+    bottom: -4.4vw;
+    left: -1vw;
+    transform-origin: 7% 93%;
+    will-change: transform;
+}
+
+.branch__img {
+    position: relative;
+    right: 0.5vw;
+    top: 0.5vw;
+    transform-origin: 50% 50%;
+    will-change: transform;
+    width: 50vw !important;
+    max-width: 50vw !important;
+}
+
+.wiper-position-right {
+    transform: translateX(50vw);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(45deg);
+    }
+
+    100% {
+        transform: rotate(-90deg);
+    }
+}
+
+@keyframes rotation_branch {
+    0% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(-50deg);
+    }
+}
