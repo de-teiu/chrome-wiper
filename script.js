@@ -115,13 +115,16 @@ const initWiper = () => {
     chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
             if (!request) {
-                return;
+                sendResponse({});
+                return true;
             }
             const result = JSON.parse(request);
             if (result.type === "updateWiper") {
                 //ワイパーの設定更新
                 updateWiper(result.settings);
             }
+            sendResponse({});
+            return true;
         });
 };
 
