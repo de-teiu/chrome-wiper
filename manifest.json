@@ -25,6 +25,6 @@
     "background": {
         "scripts": ["background.js"]
     },
-    "permissions": ["contextMenus", "storage", "tabs"],
+    "permissions": ["contextMenus", "storage", "activeTab"],
     "web_accessible_resources": ["*.png"]
 }
