@@ -23,7 +23,8 @@
         }
     ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["background.js"],
+        "persistant": false
     },
     "permissions": ["contextMenus", "storage", "activeTab"],
     "web_accessible_resources": ["*.png"]

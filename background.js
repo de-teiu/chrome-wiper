@@ -26,7 +26,7 @@ const updateWiper = () => {
 /**
  * 右クリックメニュー設定
  */
-const setContextMenu = () => {
+const setContextMenu = (visible,speed) => {
     chrome.contextMenus.create({
         id: "root",
         title: "外覇(ワイパァー) 設定",
@@ -47,6 +47,7 @@ const setContextMenu = () => {
             id: id,
             parentId: "visibleSettings",
             title: title,
+            checked: visible === id,
             "type": "radio",
             contexts: ["all"],
             onclick: info => {
@@ -58,7 +59,6 @@ const setContextMenu = () => {
             }
         });
     });
-
     //速度設定メニュー
     chrome.contextMenus.create({
         id: "speedSettings",
@@ -73,6 +73,7 @@ const setContextMenu = () => {
             id: id,
             parentId: "speedSettings",
             title: title,
+            checked: speed === id,
             "type": "radio",
             contexts: ["all"],
             onclick: info => {
@@ -90,24 +91,23 @@ const setContextMenu = () => {
  * 初期化処理
  */
 const initSettings = () => {
-    //右クリックメニュー更新
-    setContextMenu();
-    //現在の設定を取得
+    //設定読み込み
     chrome.storage.local.get([KEY_SETTINGS_VISIBLE, KEY_SETTINGS_SPEED], function (value) {
-        //設定が存在しなければデフォルト値を指定
-        const visible = (typeof value.visible === 'undefined') ? true : value.visible;
-        const speed = (typeof value.speed === 'undefined') ? "sp1.00" : value.speed;
-        chrome.contextMenus.update(speed, {
-            'checked': true
-        });
-        chrome.contextMenus.update(visible ? "visible" : "invisible", {
-            'checked': true
-        });
-        //設定を更新する
-        chrome.storage.local.set({
-            [KEY_SETTINGS_VISIBLE]: visible,
-            [KEY_SETTINGS_SPEED]: speed
-        }, () => {});
+        const visible = value.SETTINGS_VISIBLE ? "visible" : "invisible";
+        const speed = value.SETTINGS_SPEED;
+        //右クリックメニュー生成
+        setContextMenu(visible,speed);
     });
 };
 initSettings();
+
+/**
+ * 拡張機能インストール時の初期設定
+ */
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.local.set({
+        [KEY_SETTINGS_VISIBLE]: true,
+        [KEY_SETTINGS_SPEED]: "sp1.00"
+    }, () => {
+    });
+});
