@@ -87,14 +87,17 @@ const setContextMenu = (visible,speed) => {
     });
 };
 
+const DEFAULT_VISIBLE = true;
+const DEFAULT_SPEED = "sp1.00";
+
 /**
  * 初期化処理
  */
 const initSettings = () => {
     //設定読み込み
-    chrome.storage.local.get([KEY_SETTINGS_VISIBLE, KEY_SETTINGS_SPEED], function (value) {
-        const visible = value.SETTINGS_VISIBLE ? "visible" : "invisible";
-        const speed = value.SETTINGS_SPEED;
+    chrome.storage.local.get([KEY_SETTINGS_VISIBLE, KEY_SETTINGS_SPEED], (value) => {
+        const visible = value.SETTINGS_VISIBLE || typeof value.SETTINGS_VISIBLE === "undefined" ? "visible" : "invisible";
+        const speed = typeof value.SETTINGS_SPEED === "undefined" ? DEFAULT_SPEED : value.SETTINGS_SPEED;
         //右クリックメニュー生成
         setContextMenu(visible,speed);
     });
@@ -105,9 +108,16 @@ initSettings();
  * 拡張機能インストール時の初期設定
  */
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.local.set({
-        [KEY_SETTINGS_VISIBLE]: true,
-        [KEY_SETTINGS_SPEED]: "sp1.00"
-    }, () => {
+    //現在の設定を読み込み
+    chrome.storage.local.get([KEY_SETTINGS_VISIBLE, KEY_SETTINGS_SPEED], (value) => {
+        if(typeof value.SETTINGS_VISIBLE === "undefined"){
+            //無ければデフォルトの設定を登録
+            chrome.storage.local.set({
+                [KEY_SETTINGS_VISIBLE]: DEFAULT_VISIBLE,
+                [KEY_SETTINGS_SPEED]: DEFAULT_SPEED
+            }, () => {
+            });
+        }
     });
+    
 });

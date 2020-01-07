@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "外覇(ワイパァー)",
     "short_name": "外覇(ワイパァー)",
-    "version": "1.0",
+    "version": "1.1",
     "description": "ブラウザ上でワイパーが動きます。表示や速度の変更も可能。",
     "icons": {
         "16": "resource/icons/icon16.png",
