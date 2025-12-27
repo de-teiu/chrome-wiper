@@ -21,7 +21,7 @@ const createWiper = (wiperRootPath, wiperBranchPath, isRight, settings) => {
     }
     //ワイパー(根本部分)を追加
     const rootImg = document.createElement("img");
-    rootImg.src = chrome.extension.getURL(wiperRootPath);
+    rootImg.src = chrome.runtime.getURL(wiperRootPath);
     rootImg.classList.add("wiper-root");
     wiper.appendChild(rootImg);
     //ワイパー(枝部分)を追加
@@ -29,7 +29,7 @@ const createWiper = (wiperRootPath, wiperBranchPath, isRight, settings) => {
     branch.classList.add("chrome-wiper");
     branch.classList.add("wiper-branch");
     const branchImg = document.createElement("img");
-    branchImg.src = chrome.extension.getURL(wiperBranchPath);
+    branchImg.src = chrome.runtime.getURL(wiperBranchPath);
     branchImg.classList.add("branch__img");
     branch.appendChild(branchImg);
     wiper.appendChild(branch);
@@ -113,7 +113,7 @@ const initWiper = () => {
     
     //backgroundからのリクエストのリスナー設定
     chrome.runtime.onMessage.addListener(
-        (request, sender, sendResponse) => {
+        (request, _sender, sendResponse) => {
             if (!request) {
                 sendResponse({});
                 return true;

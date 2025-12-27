@@ -1,17 +1,18 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "外覇(ワイパァー)",
     "short_name": "外覇(ワイパァー)",
-    "version": "1.1",
+    "version": "2.0",
     "description": "ブラウザ上でワイパーが動きます。表示や速度の変更も可能。",
     "icons": {
         "16": "resource/icons/icon16.png",
         "48": "resource/icons/icon48.png",
         "128": "resource/icons/icon128.png"
     },
-    "page_action": {
+    "action": {
         "default_icon": {
-            "19": "resource/icons/icon19.png"
+            "16": "resource/icons/icon16.png",
+            "48": "resource/icons/icon48.png"
         },
         "default_title": "外覇(ワイパァー)"
     },
@@ -23,9 +24,13 @@
         }
     ],
     "background": {
-        "scripts": ["background.js"],
-        "persistant": false
+        "service_worker": "background.js"
     },
     "permissions": ["contextMenus", "storage", "activeTab"],
-    "web_accessible_resources": ["*.png"]
+    "web_accessible_resources": [
+        {
+            "resources": ["resource/*.png"],
+            "matches": ["http://*/*", "https://*/*"]
+        }
+    ]
 }
